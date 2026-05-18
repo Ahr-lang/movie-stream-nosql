@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Genres</title>
+</head>
+<body>
+  <h1>Genres</h1>
+
+  <nav>
+    <a href="/movies">Movies</a> |
+    <a href="/genres">Genres</a>
+  </nav>
+
+  <hr>
+
+  <a href="/genres/new">Create Genre</a>
+
+  <form method="GET" action="/genres">
+    <input type="text" name="search" placeholder="Search by name" value="<%= search %>">
+    <button type="submit">Search</button>
+  </form>
+
+  <hr>
+
+  <% if (genres.length === 0) { %>
+    <p>No genres found.</p>
+  <% } %>
+
+  <% genres.forEach((genre) => { %>
+    <div style="border: 1px solid #ccc; padding: 12px; margin-bottom: 12px;">
+      <h2><%= genre.name %></h2>
+      <p><strong>Genre ID:</strong> <%= genre.genreId %></p>
+
+      <a href="/genres/<%= genre._id %>/edit">Edit</a>
+
+      <form method="POST" action="/genres/<%= genre._id %>/delete" style="display:inline;">
+        <button type="submit" onclick="return confirm('Delete this genre? It will be removed from related movies.')">
+          Delete
+        </button>
+      </form>
+    </div>
+  <% }) %>
+</body>
+</html>

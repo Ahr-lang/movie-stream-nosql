@@ -1,0 +1,17 @@
+{
+  "name": "moviestream-nosql",
+  "version": "1.0.0",
+  "description": "MovieStream NoSQL MongoDB project",
+  "main": "server.js",
+  "scripts": {
+    "seed": "node seed.js",
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mongoose": "^9.6.2"
+  }
+}

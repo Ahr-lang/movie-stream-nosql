@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Movies</title>
+</head>
+<body>
+  <h1>Movies</h1>
+
+  <nav>
+    <a href="/movies">Movies</a> |
+    <a href="/genres">Genres</a>
+  </nav>
+
+  <hr>
+
+  <a href="/movies/new">Create Movie</a>
+
+  <form method="GET" action="/movies">
+    <input type="text" name="search" placeholder="Search by title" value="<%= search %>">
+
+    <select name="genre">
+      <option value="">All genres</option>
+      <% genres.forEach((genre) => { %>
+        <option value="<%= genre._id %>" <%= selectedGenre == genre._id.toString() ? "selected" : "" %>>
+          <%= genre.name %>
+        </option>
+      <% }) %>
+    </select>
+
+    <button type="submit">Search</button>
+  </form>
+
+  <hr>
+
+  <% if (movies.length === 0) { %>
+    <p>No movies found.</p>
+  <% } %>
+
+  <% movies.forEach((movie) => { %>
+    <div style="border: 1px solid #ccc; padding: 12px; margin-bottom: 12px;">
+      <h2><%= movie.title %></h2>
+
+      <p><strong>Year:</strong> <%= movie.year %></p>
+      <p><strong>Runtime:</strong> <%= movie.runtime %></p>
+      <p><strong>Price:</strong> $<%= movie.listPrice %></p>
+
+      <p>
+        <strong>Genres:</strong>
+        <%= movie.genres.map((genre) => genre.name).join(", ") || "No genres" %>
+      </p>
+
+      <p>
+        <strong>Actors:</strong>
+        <%= movie.actors.map((actor) => actor.name).join(", ") || "No actors" %>
+      </p>
+
+      <p><%= movie.summary %></p>
+
+      <a href="/movies/<%= movie._id %>/edit">Edit</a>
+
+      <form method="POST" action="/movies/<%= movie._id %>/delete" style="display:inline;">
+        <button type="submit" onclick="return confirm('Delete this movie?')">Delete</button>
+      </form>
+    </div>
+  <% }) %>
+</body>
+</html>

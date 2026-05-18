@@ -269,6 +269,10 @@ app.post("/genres/:id/delete", async (req, res) => {
 
 async function start() {
   try {
+    if (!process.env.MONGODB_URI) {
+      throw new Error("Missing MONGODB_URI environment variable");
+    }
+
     await mongoose.connect(process.env.MONGODB_URI);
 
     const port = process.env.PORT || 3000;

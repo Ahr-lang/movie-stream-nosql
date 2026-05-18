@@ -270,8 +270,11 @@ app.post("/genres/:id/delete", async (req, res) => {
 async function start() {
   try {
     if (!process.env.MONGODB_URI) {
-      throw new Error("Missing MONGODB_URI environment variable");
+      console.error("Startup failed: MONGODB_URI is not configured in Render.");
+      process.exit(1);
     }
+
+    console.log("MONGODB_URI detected. Connecting to MongoDB...");
 
     await mongoose.connect(process.env.MONGODB_URI);
 
@@ -281,7 +284,8 @@ async function start() {
       console.log(`MovieStream app running on port ${port}`);
     });
   } catch (error) {
-    console.error("Error starting app:", error);
+    console.error("Error starting app:", error.message);
+    console.error(error);
     process.exit(1);
   }
 }
